@@ -9,6 +9,10 @@ namespace TowerDefence
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
+        Texture2D towerTexture;
+        Texture2D bulletTexture;
+        Texture2D enemyTexture;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -26,6 +30,9 @@ namespace TowerDefence
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            towerTexture = Content.Load<Texture2D>("tower");
+            bulletTexture = Content.Load<Texture2D>("bullet");
+            enemyTexture = Content.Load<Texture2D>("enemy");
         }
 
         protected override void Update(GameTime gameTime)
