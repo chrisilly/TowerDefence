@@ -10,12 +10,20 @@ namespace TowerDefence
 {
     internal class Enemy : Actor
     {
+        public static List<Enemy> enemies = new();
+
         int health;
         float speed;
 
-        public Enemy(Texture2D texture) : base(texture)
+        public Enemy()
         {
+            this.texture = TextureManager.enemyTexture;
+        }
 
+        public Enemy(Vector2 position)
+        {
+            this.texture = TextureManager.enemyTexture;
+            this.position = position;
         }
     }
 }

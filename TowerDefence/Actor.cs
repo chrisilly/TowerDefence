@@ -8,14 +8,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefence
 {
-    internal class Actor
+    public class Actor
     {
         protected Texture2D texture;
         protected Vector2 position;
+        public Vector2 Position { get { return position; } }
+        protected Vector2 velocity;
 
-        public Actor(Texture2D texture)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            this.texture = texture;
+            spriteBatch.Draw(texture, position, Color.White);
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+
         }
     }
 }
