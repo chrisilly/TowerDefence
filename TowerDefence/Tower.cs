@@ -63,7 +63,7 @@ namespace TowerDefence
         {
             fireCooldownTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(fireCooldownTimer >= fireRate )
+            if(fireCooldownTimer >= fireRate && Enemy.enemies.Count != 0)
             {
                 fireCooldownTimer = 0;
                 Shoot();
