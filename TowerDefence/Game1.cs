@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TowerDefence
 {
@@ -37,7 +38,8 @@ namespace TowerDefence
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            foreach (Enemy enemy in Enemy.enemies)
+            // ToList() iterates over a copy of the enemies list so as to not cause error when modifying the original list. Bad for large collections => performance hit.
+            foreach (Enemy enemy in Enemy.enemies.ToList())
                 enemy.Update(gameTime);
 
             foreach (Tower tower in Tower.towers)
