@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace TowerDefence
 {
@@ -17,17 +19,32 @@ namespace TowerDefence
         double fireCooldownTimer;
         bool autoFire;
 
+        bool preview;
+
+        MouseState mouseState;
+        MouseState previousMouseState;
+        KeyboardState keyboardState;
+        KeyboardState previousKeyboardState;
+
         public Tower()
         {
             this.texture = TextureManager.towerTexture;
             this.bulletSpeed = 200f;
             this.fireRate = 3f;
             this.fireCooldownTimer = fireRate;
+            this.preview = true;
         }
 
         public override void Update(GameTime gameTime)
         {
-            AutoFire(gameTime);
+            GetInputState();
+
+            CreateTower();
+
+            if(preview)
+                HandlePreview();
+            else
+                AutoFire(gameTime);
         }
 
         public void Shoot()
@@ -68,6 +85,41 @@ namespace TowerDefence
                 fireCooldownTimer = 0;
                 Shoot();
             }
+        }
+
+        public void HandlePreview()
+        {
+            this.position = new Vector2(mouseState.Position.X, mouseState.Position.Y);
+            if(mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+                preview = !preview;
+        }
+
+        public bool CanCreate()
+        {
+            foreach (Tower tower in towers)
+                if (tower.preview || !(keyboardState.IsKeyDown(Keys.N) && previousKeyboardState.IsKeyUp(Keys.N)))
+                    return false;
+
+            return true;
+        }
+
+        public void CreateTower()
+        {
+            if (CanCreate())
+            {
+                Tower tower = new Tower();
+                towers.Add(tower);
+                Debug.WriteLine("Tower Created.");
+            }
+        }
+
+        public void GetInputState()
+        {
+            previousMouseState = mouseState;
+            mouseState = Mouse.GetState();
+
+            previousKeyboardState = keyboardState;
+            keyboardState = Keyboard.GetState();
         }
     }
 }
