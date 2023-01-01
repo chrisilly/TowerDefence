@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +43,7 @@ namespace TowerDefence
             foreach (Enemy enemy in Enemy.enemies.ToList())
                 enemy.Update(gameTime);
 
-            foreach (Tower tower in Tower.towers)
+            foreach (Tower tower in Tower.towers.ToList())
                 tower.Update(gameTime);
 
             foreach (Bullet bullet in Bullet.bullets)
