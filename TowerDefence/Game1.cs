@@ -11,6 +11,9 @@ namespace TowerDefence
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        public static Point windowSize { get; private set; }
+
+        Player player;
 
         public Game1()
         {
@@ -21,6 +24,10 @@ namespace TowerDefence
 
         protected override void Initialize()
         {
+            windowSize = new Point(1280, 720);
+            graphics.PreferredBackBufferWidth = windowSize.X;
+            graphics.PreferredBackBufferHeight = windowSize.Y;
+            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -31,13 +38,15 @@ namespace TowerDefence
 
             TextureManager.LoadContent(Content);
 
-            SpawnObjects();
+            StartGame();
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            player.Update(gameTime);
 
             // ToList() iterates over a copy of the enemies list so as to not cause error when modifying the original list. Bad for large collections => performance hit.
             foreach (Enemy enemy in Enemy.enemies.ToList())
@@ -58,6 +67,8 @@ namespace TowerDefence
 
             spriteBatch.Begin();
 
+            player.Draw(spriteBatch);
+
             foreach (Enemy enemy in Enemy.enemies)
                 enemy.Draw(spriteBatch);
 
@@ -72,10 +83,9 @@ namespace TowerDefence
             base.Draw(gameTime);
         }
 
-        public void SpawnObjects()
+        public void StartGame()
         {
-            Tower tower = new Tower();
-            Tower.towers.Add(tower);
+            player = new Player();
 
             Enemy enemy = new Enemy(new Vector2(200, 200));
             Enemy.enemies.Add(enemy);
