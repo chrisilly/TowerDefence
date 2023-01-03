@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefence
 {
-    public class Actor
+    public abstract class Actor
     {
         protected Texture2D texture;
         protected Vector2 velocity;
@@ -20,9 +20,11 @@ namespace TowerDefence
         public Rectangle Hitbox { get { return hitbox; } }
         public Vector2 HitboxPosition { get { return new Vector2(hitbox.X, hitbox.Y); } }
 
+        protected Color color = Color.White;
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, position, color);
             DrawHitbox(spriteBatch);
         }
 
