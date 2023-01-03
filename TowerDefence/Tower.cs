@@ -21,26 +21,21 @@ namespace TowerDefence
 
         bool preview;
 
-        MouseState mouseState;
-        MouseState previousMouseState;
-        KeyboardState keyboardState;
-        KeyboardState previousKeyboardState;
-
         public Tower()
         {
             this.texture = TextureManager.towerTexture;
+            this.position = Player.GetMousePosition();
+
             this.bulletSpeed = 200f;
             this.fireRate = 3f;
             this.fireCooldownTimer = fireRate;
+
             this.preview = true;
+            this.color = Color.White * 0.5f;
         }
 
         public override void Update(GameTime gameTime)
         {
-            GetInputState();
-
-            CreateTower();
-
             if(preview)
                 HandlePreview();
             else
@@ -89,37 +84,26 @@ namespace TowerDefence
 
         public void HandlePreview()
         {
-            this.position = new Vector2(mouseState.Position.X, mouseState.Position.Y);
-            if(mouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
-                preview = !preview;
-        }
+            this.position = Player.GetMousePosition();
 
-        public bool CanCreate()
-        {
-            foreach (Tower tower in towers)
-                if (tower.preview || !(keyboardState.IsKeyDown(Keys.N) && previousKeyboardState.IsKeyUp(Keys.N)))
-                    return false;
+            if (Player.InputPressed(2))
+                towers.Remove(this);
 
-            return true;
-        }
-
-        public void CreateTower()
-        {
-            if (CanCreate())
+            if(Player.InputPressed(1) && CanPlace())
             {
-                Tower tower = new Tower();
-                towers.Add(tower);
-                Debug.WriteLine("Tower Created.");
+                preview = false;
+                color = Color.White;
             }
         }
 
-        public void GetInputState()
+        public bool CanPlace()
         {
-            previousMouseState = mouseState;
-            mouseState = Mouse.GetState();
+            return true;
+        }
 
-            previousKeyboardState = keyboardState;
-            keyboardState = Keyboard.GetState();
+        public static bool GetPreview(Tower tower)
+        {
+            return tower.preview;
         }
     }
 }
