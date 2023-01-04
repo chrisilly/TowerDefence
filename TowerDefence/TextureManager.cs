@@ -13,6 +13,7 @@ namespace TowerDefence
     abstract class TextureManager
     {
         public static Texture2D towerTexture;
+        public static Texture2D wowerTexture;
         public static Texture2D enemyTexture;
         public static Texture2D bulletTexture;
         public static Texture2D hitboxTexture;
@@ -20,8 +21,9 @@ namespace TowerDefence
 
         public static void LoadContent(ContentManager Content)
         {
-            towerTexture = Content.Load<Texture2D>("tower");
-            bulletTexture = Content.Load<Texture2D>("bullet");
+            towerTexture = Content.Load<Texture2D>("towers");
+            wowerTexture = Content.Load<Texture2D>("tower");
+            bulletTexture = Content.Load<Texture2D>("bullets");
             enemyTexture = Content.Load<Texture2D>("enemy");
             hitboxTexture = Content.Load<Texture2D>("tile");
             heartTexture = Content.Load<Texture2D>("heart");

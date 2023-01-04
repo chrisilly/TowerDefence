@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefence
 {
-    public abstract class Actor
+    internal abstract class Actor
     {
         protected Texture2D texture;
         protected Vector2 velocity;
@@ -25,7 +25,7 @@ namespace TowerDefence
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, position, color);
-            DrawHitbox(spriteBatch);
+            //DrawHitbox(spriteBatch);
         }
 
         public void DrawHitbox(SpriteBatch spriteBatch)

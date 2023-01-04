@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TowerDefence
 {
+    enum TowerType { Auto, Manual, Special }
+
     internal class Tower : Actor
     {
         public static List<Tower> towers = new();
@@ -31,7 +33,7 @@ namespace TowerDefence
             this.fireCooldownTimer = fireRate;
 
             this.preview = true;
-            this.color = Color.White * 0.5f;
+            this.color = Color.DarkGray * 0.5f;
         }
 
         public override void Update(GameTime gameTime)
@@ -92,7 +94,7 @@ namespace TowerDefence
             if(Player.InputPressed(1) && CanPlace())
             {
                 preview = false;
-                color = Color.White;
+                color = Color.DarkGray;
             }
         }
 

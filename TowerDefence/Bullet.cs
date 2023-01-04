@@ -17,21 +17,20 @@ namespace TowerDefence
             this.texture = TextureManager.bulletTexture;
             this.position = startPosition;
             this.velocity = speed * direction;
-            this.hitbox = new Rectangle((int)startPosition.X, (int)startPosition.Y, 24, 24);
+            this.hitbox = new Rectangle((int)startPosition.X, (int)startPosition.Y, 6, 6);
+            this.color = Color.Yellow;
         }
 
         public override void Update(GameTime gameTime)
         {
-            hitbox = new Rectangle((int)position.X, (int)position.Y, 24, 24);
+            hitbox = new Rectangle((int)position.X, (int)position.Y, 6, 6);
             position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //hitbox.X += (int)(velocity.X * gameTime.ElapsedGameTime.TotalSeconds);
-            //hitbox.Y += (int)(velocity.Y * gameTime.ElapsedGameTime.TotalSeconds);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, HitboxPosition, null, Color.White, 0f, new Vector2((texture.Width-hitbox.Width)/2, (texture.Height-hitbox.Height)/2), 1f, SpriteEffects.None, 1f);
-            //DrawHitbox(spriteBatch);
+            spriteBatch.Draw(texture, HitboxPosition, null, color, 0f, new Vector2((texture.Width-hitbox.Width)/2, (texture.Height-hitbox.Height)/2), 1f, SpriteEffects.None, 1f);
+            DrawHitbox(spriteBatch);
         }
     }
 }
