@@ -17,6 +17,9 @@ namespace TowerDefence
         static MouseState mouseState, previousMouseState;
         static KeyboardState keyboardState, previousKeyboardState;
 
+        double spawnCooldownTimer;
+        float spawnCooldown;
+
         public Player()
         {
             this.texture = TextureManager.heartTexture;
@@ -24,14 +27,34 @@ namespace TowerDefence
             this.health = 1;
             this.position = new Vector2((Game1.windowSize.X - texture.Width) / 2, (Game1.windowSize.Y - texture.Height) / 2);
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 54, 48);
+            spawnCooldown = 3f;
+            spawnCooldownTimer = spawnCooldown;
         }
 
         public override void Update(GameTime gameTime)
         {
             GetInputState();
 
+            SpawnEnemies(gameTime);
+
             if (CanCreate())
                 CreateTower();
+
+            if (CheckCollision())
+                health--;
+        }
+
+        public bool CheckCollision()
+        {
+            foreach(Enemy enemy in Enemy.enemies)
+            {
+                if (enemy.Hitbox.Intersects(this.hitbox))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool CanCreate()
@@ -51,6 +74,23 @@ namespace TowerDefence
             Tower tower = new Tower();
             Tower.towers.Add(tower);
             Debug.WriteLine("Tower Created.");
+        }
+
+        public void SpawnEnemies(GameTime gameTime)
+        {
+            spawnCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+
+            if(spawnCooldownTimer <= 0)
+            {
+                spawnCooldownTimer = spawnCooldown;
+                CreateEnemy();
+            }
+        }
+
+        public void CreateEnemy()
+        {
+            Enemy enemy = new Enemy();
+            Enemy.enemies.Add(enemy);
         }
 
         public void GetInputState()

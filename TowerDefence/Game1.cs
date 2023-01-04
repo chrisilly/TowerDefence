@@ -7,11 +7,14 @@ using System.Linq;
 
 namespace TowerDefence
 {
+    enum GameStates { Menu, Play, End }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         public static Point windowSize { get; private set; }
+        public static Random random = new();
 
         Player player;
 
@@ -86,12 +89,6 @@ namespace TowerDefence
         public void StartGame()
         {
             player = new Player();
-
-            Enemy enemy = new Enemy(new Vector2(200, 200));
-            Enemy.enemies.Add(enemy);
-
-            Enemy enemy2 = new Enemy(new Vector2(290, 0));
-            Enemy.enemies.Add(enemy2);
         }
     }
 }
