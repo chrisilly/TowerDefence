@@ -78,6 +78,8 @@ namespace TowerDefence
 
             spriteBatch.Begin();
 
+            spriteBatch.Draw(TextureManager.backgroundTexture, Vector2.Zero, Color.White);
+
             player.Draw(spriteBatch);
 
             //DrawHitboxes();
