@@ -25,12 +25,15 @@ namespace TowerDefence
         {
             hitbox = new Rectangle((int)position.X, (int)position.Y, 6, 6);
             position += velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // Remove out of bounds bullets
+            bullets.RemoveAll(bullet => bullet.position.X <= 0 || bullet.position.X >= Game1.windowSize.X || bullet.position.Y <= 0 || bullet.position.Y >= Game1.windowSize.Y);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, HitboxPosition, null, color, 0f, new Vector2((texture.Width-hitbox.Width)/2, (texture.Height-hitbox.Height)/2), 1f, SpriteEffects.None, 1f);
-            DrawHitbox(spriteBatch);
+            //DrawHitbox(spriteBatch);
         }
     }
 }
