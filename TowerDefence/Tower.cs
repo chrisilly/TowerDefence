@@ -17,6 +17,7 @@ namespace TowerDefence
         public static List<Tower> towers = new();
 
         float bulletSpeed;
+        int bulletDamage;
         float fireRate;
         double fireCooldownTimer;
         bool autoFire;
@@ -30,7 +31,23 @@ namespace TowerDefence
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 
             this.bulletSpeed = 200f;
+            this.bulletDamage = 1;
             this.fireRate = 3f;
+            this.fireCooldownTimer = fireRate;
+
+            this.preview = true;
+            this.color = Color.DarkGray * 0.5f;
+        }
+        
+        public Tower(float bulletSpeed, int bulletDamage, float fireRate, bool autoFire)
+        {
+            this.texture = TextureManager.towerTexture;
+            this.position = Player.GetMousePosition();
+            this.hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+
+            this.bulletSpeed = bulletSpeed;
+            this.bulletDamage = bulletDamage;
+            this.fireRate = fireRate;
             this.fireCooldownTimer = fireRate;
 
             this.preview = true;
@@ -50,7 +67,7 @@ namespace TowerDefence
         public void Shoot()
         {
             Vector2 direction = GetShortestTrajectory();
-            Bullet bullet = new Bullet(position, bulletSpeed, direction);
+            Bullet bullet = new Bullet(position, bulletSpeed, direction, bulletDamage);
             Bullet.bullets.Add(bullet);
         }
 

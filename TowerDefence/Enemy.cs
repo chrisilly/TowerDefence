@@ -21,26 +21,19 @@ namespace TowerDefence
         float speed;
 
         double animationTimer;
+        float animationTime;
 
         public Enemy()
         {
             this.texture = TextureManager.enemySpriteSheet;
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 36, 42);
             this.position = DetermineEnemyStartPosition();
-            this.health = 1;
-            this.color = Color.Green;
+            this.health = 2;
+            this.color = Color.LightCoral;
 
             this.speed = 25f;
+            this.animationTime = speed * 10;
             this.velocity = speed * Vector2.Normalize((new Vector2(Game1.windowSize.X / 2, Game1.windowSize.Y / 2) - this.position));
-        }
-
-        public Enemy(Vector2 startPosition)
-        {
-            this.texture = TextureManager.enemyTexture;
-            this.position = startPosition;
-            this.health = 1;
-            this.hitbox = new Rectangle((int)position.X, (int)position.Y, 36, 42);
-            this.color = Color.Red;
         }
 
         public override void Update(GameTime gameTime)
@@ -66,7 +59,12 @@ namespace TowerDefence
                 if (bullet.Hitbox.Intersects(this.hitbox))
                 {
                     Bullet.bullets.Remove(bullet);
-                    health--;
+                    health -= bullet.Damage;
+
+                    if (health == 1)
+                    {
+                        OnDamage();
+                    }
                 }
             }
 
@@ -74,11 +72,18 @@ namespace TowerDefence
             enemies.RemoveAll(enemy => enemy.health <= 0);
         }
 
+        public void OnDamage()
+        {
+            texture = TextureManager.enemyHurtSpriteSheet;
+            velocity *= 1.5f;
+            animationTime -= speed * 2;
+        }
+
         public void Animate(GameTime gameTime)
         {
             animationTimer += gameTime.ElapsedGameTime.Milliseconds;
 
-            if(animationTimer > 250) 
+            if(animationTimer > animationTime) 
             { 
                 animationTimer = 0;
 

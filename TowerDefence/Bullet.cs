@@ -12,12 +12,16 @@ namespace TowerDefence
     {
         public static List<Bullet> bullets = new();
 
-        public Bullet(Vector2 startPosition, float speed, Vector2 direction)
+        int damage;
+        public int Damage { get { return damage; } }
+
+        public Bullet(Vector2 startPosition, float speed, Vector2 direction, int damage)
         {
             this.texture = TextureManager.bulletTexture;
             this.position = startPosition;
             this.velocity = speed * direction;
             this.hitbox = new Rectangle((int)startPosition.X, (int)startPosition.Y, 6, 6);
+            this.damage = damage;
             this.color = Color.Yellow;
         }
 
