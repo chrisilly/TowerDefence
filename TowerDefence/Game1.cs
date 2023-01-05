@@ -18,6 +18,11 @@ namespace TowerDefence
 
         Player player;
 
+        static Rectangle enemyPathX;
+        static Rectangle enemyPathY;
+        public static Rectangle EnemyPathX { get { return enemyPathX; } }
+        public static Rectangle EnemyPathY { get { return enemyPathY; } }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -31,6 +36,9 @@ namespace TowerDefence
             graphics.PreferredBackBufferWidth = windowSize.X;
             graphics.PreferredBackBufferHeight = windowSize.Y;
             graphics.ApplyChanges();
+
+            enemyPathX = new Rectangle(0, (windowSize.Y - 100) / 2, windowSize.X, 100);
+            enemyPathY = new Rectangle((windowSize.X - 100) / 2, 0, 100, windowSize.Y);
 
             base.Initialize();
         }
@@ -58,7 +66,7 @@ namespace TowerDefence
             foreach (Tower tower in Tower.towers.ToList())
                 tower.Update(gameTime);
 
-            foreach (Bullet bullet in Bullet.bullets)
+            foreach (Bullet bullet in Bullet.bullets.ToList())
                 bullet.Update(gameTime);
 
             base.Update(gameTime);
@@ -72,6 +80,8 @@ namespace TowerDefence
 
             player.Draw(spriteBatch);
 
+            //DrawHitboxes();
+
             foreach (Enemy enemy in Enemy.enemies)
                 enemy.Draw(spriteBatch);
 
@@ -84,6 +94,12 @@ namespace TowerDefence
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void DrawHitboxes()
+        {
+            spriteBatch.Draw(TextureManager.hitboxTexture, enemyPathX, Color.Green * 0.5f);
+            spriteBatch.Draw(TextureManager.hitboxTexture, enemyPathY, Color.Green * 0.5f);
         }
 
         public void StartGame()
