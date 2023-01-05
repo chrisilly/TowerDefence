@@ -15,6 +15,8 @@ namespace TowerDefence
         public static Texture2D towerTexture;
         public static Texture2D wowerTexture;
         public static Texture2D enemyTexture;
+        public static Texture2D enemySpriteSheet;
+        public static Texture2D enemyHurtSpriteSheet;
         public static Texture2D bulletTexture;
         public static Texture2D hitboxTexture;
         public static Texture2D heartTexture;
@@ -25,6 +27,8 @@ namespace TowerDefence
             wowerTexture = Content.Load<Texture2D>("tower");
             bulletTexture = Content.Load<Texture2D>("bullets");
             enemyTexture = Content.Load<Texture2D>("enemy");
+            enemySpriteSheet = Content.Load<Texture2D>("enemySpriteSheet");
+            enemyHurtSpriteSheet = Content.Load<Texture2D>("enemyHurtSpriteSheet");
             hitboxTexture = Content.Load<Texture2D>("tile");
             heartTexture = Content.Load<Texture2D>("heart");
         }

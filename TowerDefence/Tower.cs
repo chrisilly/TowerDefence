@@ -58,7 +58,7 @@ namespace TowerDefence
 
             foreach (Enemy enemy in Enemy.enemies)
             {
-                Vector2 pathToEnemy = enemy.Position - this.position;
+                Vector2 pathToEnemy = new Vector2(enemy.Position.X + enemy.Texture.Width/3 / 2, enemy.Position.Y + enemy.Texture.Height / 2) - this.position;
                 if(shortestPath == Vector2.Zero)
                 {
                     shortestPath = pathToEnemy;

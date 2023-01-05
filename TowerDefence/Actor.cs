@@ -11,6 +11,7 @@ namespace TowerDefence
     internal abstract class Actor
     {
         protected Texture2D texture;
+        public Texture2D Texture { get { return texture; } }
         protected Vector2 velocity;
 
         protected Vector2 position;
