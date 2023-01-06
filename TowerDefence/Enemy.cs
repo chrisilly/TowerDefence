@@ -4,18 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design.Behavior;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefence
 {
-    enum EnemyType { Simple, Heavy, Sneaky, Speedy }
-
-    internal class Enemy : Actor
+    public class Enemy : Actor
     {
         public static List<Enemy> enemies = new();
 
         Rectangle sourceRectangle = new Rectangle(0, 0, 48, 48);
+
+        IEnemyBehaviorType behavior;
 
         int health;
         float speed;
@@ -23,17 +24,40 @@ namespace TowerDefence
         double animationTimer;
         float animationTime;
 
+        public int Health { get { return health; } set { health = value; } }
+        public float Speed { get { return speed; } set { speed = value; } }
+        public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
+        public float AnimationTime { get { return animationTime; } set { animationTime = value; } }
+        public Color Color { get { return color; } set { color = value; } }
+
+        // Default Enemy
         public Enemy()
         {
             this.texture = TextureManager.enemySpriteSheet;
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 36, 42);
             this.position = DetermineEnemyStartPosition();
-            this.health = 2;
-            this.color = Color.LightCoral;
 
             this.speed = 25f;
-            this.animationTime = speed * 10;
+
+            this.behavior = new BasicEnemy();
+
             this.velocity = speed * Vector2.Normalize((new Vector2(Game1.windowSize.X / 2, Game1.windowSize.Y / 2) - this.position));
+            this.animationTime = speed * 10;
+        }
+        
+        public Enemy(IEnemyBehaviorType behavior)
+        {
+            this.texture = TextureManager.enemySpriteSheet;
+            this.hitbox = new Rectangle((int)position.X, (int)position.Y, 36, 42);
+            this.position = DetermineEnemyStartPosition();
+            this.behavior = behavior;
+
+            this.speed = 25f;
+
+            behavior.Initialize(this);
+
+            this.velocity = speed * Vector2.Normalize((new Vector2(Game1.windowSize.X / 2, Game1.windowSize.Y / 2) - this.position));
+            this.animationTime = ((25*25)/speed) * 10;
         }
 
         public override void Update(GameTime gameTime)
@@ -60,23 +84,15 @@ namespace TowerDefence
                 {
                     Bullet.bullets.Remove(bullet);
                     health -= bullet.Damage;
-
                     if (health == 1)
-                    {
-                        OnDamage();
-                    }
+                        texture = TextureManager.enemyHurtSpriteSheet;
+
+                    behavior.OnDamage(this);
                 }
             }
 
             // Remove all enemies that return a health value less than or equal to 0
             enemies.RemoveAll(enemy => enemy.health <= 0);
-        }
-
-        public void OnDamage()
-        {
-            texture = TextureManager.enemyHurtSpriteSheet;
-            velocity *= 1.5f;
-            animationTime -= speed * 2;
         }
 
         public void Animate(GameTime gameTime)
@@ -120,6 +136,66 @@ namespace TowerDefence
             }
 
             return defaultStartPosition;
+        }
+    }
+
+    public interface IEnemyBehaviorType
+    {
+        void Initialize(Enemy enemy);
+
+        void OnDamage(Enemy enemy)
+        {
+            
+        }
+    }
+
+    public class FastEnemy : IEnemyBehaviorType
+    {
+        public void Initialize(Enemy enemy)
+        {
+            enemy.Speed *= 2.5f;
+            enemy.Health = 1;
+            enemy.Color = Color.CornflowerBlue;
+        }
+    }
+
+    public class SlowEnemy : IEnemyBehaviorType
+    {
+        public void Initialize(Enemy enemy)
+        {
+            enemy.Speed /= 2;
+            enemy.Health = 3;
+            enemy.Color = Color.DarkOliveGreen;
+        }
+
+        public void OnDamage(Enemy enemy)
+        {
+            if (enemy.Health == 2)
+                enemy.Color = Color.YellowGreen;
+        }
+    }
+
+    public class AngryEnemy : IEnemyBehaviorType
+    {
+        public void Initialize(Enemy enemy)
+        {
+            enemy.Health = 2;
+            enemy.Color = Color.LightCoral;
+        }
+
+        public void OnDamage(Enemy enemy)
+        {
+            enemy.Velocity *= 2;
+            enemy.AnimationTime /= 2;
+        }
+    }
+
+    public class BasicEnemy : IEnemyBehaviorType
+    {
+        public void Initialize(Enemy enemy)
+        {
+            enemy.Health = 2;
+            enemy.Color = Color.Coral;
         }
     }
 }

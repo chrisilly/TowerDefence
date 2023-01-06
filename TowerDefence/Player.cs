@@ -89,7 +89,26 @@ namespace TowerDefence
 
         public void CreateEnemy()
         {
-            Enemy enemy = new Enemy();
+            IEnemyBehaviorType enemyType;
+            int chance = Game1.random.Next(16);
+
+            switch (chance)
+            {
+                case 0:
+                    enemyType = new FastEnemy();
+                    break;
+                case 1:
+                    enemyType = new SlowEnemy();
+                    break;
+                case 2:
+                    enemyType = new AngryEnemy();
+                    break;
+                default:
+                    enemyType = new BasicEnemy();
+                    break;
+            }
+
+            Enemy enemy = new Enemy(enemyType);
             Enemy.enemies.Add(enemy);
         }
 

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefence
 {
-    internal abstract class Actor
+    public abstract class Actor
     {
         protected Texture2D texture;
         public Texture2D Texture { get { return texture; } }
