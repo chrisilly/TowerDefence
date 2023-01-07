@@ -28,8 +28,9 @@ namespace TowerDefence
             this.health = 2;
             this.position = new Vector2((Game1.windowSize.X - texture.Width) / 2, (Game1.windowSize.Y - texture.Height) / 2);
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 54, 48);
-            spawnCooldown = 4f;
-            spawnCooldownTimer = spawnCooldown;
+            
+            this.spawnCooldown = 4f;
+            this.spawnCooldownTimer = spawnCooldown;
         }
 
         public override void Update(GameTime gameTime)
@@ -179,6 +180,17 @@ namespace TowerDefence
         public static Vector2 GetMousePosition()
         {
             return new Vector2(mouseState.Position.X, mouseState.Position.Y);
+        }
+
+        public static bool IsMouseHovering(Rectangle hitbox)
+        {
+            if (GetMousePosition().X < hitbox.X || GetMousePosition().X > (hitbox.X + hitbox.Width))
+                return false;
+
+            else if (GetMousePosition().Y < hitbox.Y || GetMousePosition().Y > (hitbox.Y + hitbox.Height))
+                return false;
+
+            return true;
         }
     }
 }
