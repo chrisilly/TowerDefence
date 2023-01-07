@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace TowerDefence
 {
-    enum GameStates { Menu, Play, End }
+    public enum GameStates { Menu, Play, End }
 
     public class Game1 : Game
     {
@@ -17,6 +17,8 @@ namespace TowerDefence
         public static Random random = new();
 
         Player player;
+
+        public static GameStates gameState;
 
         static Rectangle enemyPathX;
         static Rectangle enemyPathY;
@@ -40,6 +42,8 @@ namespace TowerDefence
             enemyPathX = new Rectangle(0, (windowSize.Y - 100) / 2, windowSize.X, 100);
             enemyPathY = new Rectangle((windowSize.X - 100) / 2, 0, 100, windowSize.Y);
 
+            gameState = GameStates.Play;
+
             base.Initialize();
         }
 
@@ -57,17 +61,29 @@ namespace TowerDefence
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            player.Update(gameTime);
+            switch (gameState)
+            {
+                case GameStates.Menu:
+                    break;
+                case GameStates.Play:
+                    player.Update(gameTime);
 
-            // ToList() iterates over a copy of the enemies list so as to not cause error when modifying the original list. Bad for large collections => performance hit.
-            foreach (Enemy enemy in Enemy.enemies.ToList())
-                enemy.Update(gameTime);
+                    // ToList() iterates over a copy of the enemies list so as to not cause error when modifying the original list. Bad for large collections => performance hit.
+                    foreach (Enemy enemy in Enemy.enemies.ToList())
+                        enemy.Update(gameTime);
 
-            foreach (Tower tower in Tower.towers.ToList())
-                tower.Update(gameTime);
+                    foreach (Tower tower in Tower.towers.ToList())
+                        tower.Update(gameTime);
 
-            foreach (Bullet bullet in Bullet.bullets.ToList())
-                bullet.Update(gameTime);
+                    foreach (Bullet bullet in Bullet.bullets.ToList())
+                        bullet.Update(gameTime);
+                    break;
+                case GameStates.End:
+                    break;
+                default:
+                    break;
+            }
+
 
             base.Update(gameTime);
         }

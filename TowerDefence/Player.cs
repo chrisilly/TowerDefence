@@ -13,6 +13,7 @@ namespace TowerDefence
     {
         int health;
         int wealth;
+        int specialEnemyChance = 16;
 
         static MouseState mouseState, previousMouseState;
         static KeyboardState keyboardState, previousKeyboardState;
@@ -24,10 +25,10 @@ namespace TowerDefence
         {
             this.texture = TextureManager.heartTexture;
             this.color = Color.Red;
-            this.health = 1;
+            this.health = 2;
             this.position = new Vector2((Game1.windowSize.X - texture.Width) / 2, (Game1.windowSize.Y - texture.Height) / 2);
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 54, 48);
-            spawnCooldown = 3f;
+            spawnCooldown = 4f;
             spawnCooldownTimer = spawnCooldown;
         }
 
@@ -35,16 +36,33 @@ namespace TowerDefence
         {
             GetInputState();
 
-            SpawnEnemies(gameTime);
+            switch (Game1.gameState)
+            {
+                case GameStates.Menu:
+                    break;
+                case GameStates.Play:
+                    SpawnEnemies(gameTime);
 
-            if (CanCreate())
-                CreateTower();
+                    if (CanCreate())
+                        CreateTower();
 
-            if (CheckCollision())
-                health--;
+                    if (Collision())
+                    {
+                        health--;
+                        if (health == 1)
+                            StartSecondWave();
+                        if (health <= 0)
+                            Game1.gameState = GameStates.End;
+                    }
+                    break;
+                case GameStates.End:
+                    break;
+                default:
+                    break;
+            }
         }
 
-        public bool CheckCollision()
+        public bool Collision()
         {
             foreach(Enemy enemy in Enemy.enemies)
             {
@@ -55,6 +73,15 @@ namespace TowerDefence
             }
 
             return false;
+        }
+
+        public void StartSecondWave()
+        {
+            Enemy.enemies.Clear();
+            Bullet.bullets.Clear();
+            color = Color.Blue;
+            specialEnemyChance -= 4;
+            spawnCooldown = 2.75f;
         }
 
         public bool CanCreate()
@@ -90,7 +117,7 @@ namespace TowerDefence
         public void CreateEnemy()
         {
             IEnemyBehaviorType enemyType;
-            int chance = Game1.random.Next(16);
+            int chance = Game1.random.Next(specialEnemyChance);
 
             switch (chance)
             {
