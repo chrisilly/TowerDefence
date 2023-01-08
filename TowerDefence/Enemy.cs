@@ -28,7 +28,6 @@ namespace TowerDefence
         public float Speed { get { return speed; } set { speed = value; } }
         public Vector2 Velocity { get { return velocity; } set { velocity = value; } }
         public float AnimationTime { get { return animationTime; } set { animationTime = value; } }
-        public Color Color { get { return color; } set { color = value; } }
 
         // Default Enemy
         public Enemy()

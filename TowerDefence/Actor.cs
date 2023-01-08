@@ -22,6 +22,7 @@ namespace TowerDefence
         public Vector2 HitboxPosition { get { return new Vector2(hitbox.X, hitbox.Y); } }
 
         protected Color color = Color.White;
+        public Color Color { get { return color; } set { color = value; } }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
@@ -34,9 +35,6 @@ namespace TowerDefence
             spriteBatch.Draw(TextureManager.hitboxTexture, hitbox, Color.Green * 0.5f);
         }
 
-        public virtual void Update(GameTime gameTime)
-        {
-
-        }
+        public abstract void Update(GameTime gameTime);
     }
 }

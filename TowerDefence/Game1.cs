@@ -98,7 +98,7 @@ namespace TowerDefence
 
             player.Draw(spriteBatch);
 
-            //DrawHitboxes();
+            //DrawPathHitboxes();
 
             foreach (Enemy enemy in Enemy.enemies)
                 enemy.Draw(spriteBatch);
@@ -114,7 +114,7 @@ namespace TowerDefence
             base.Draw(gameTime);
         }
 
-        public void DrawHitboxes()
+        public void DrawPathHitboxes()
         {
             spriteBatch.Draw(TextureManager.hitboxTexture, enemyPathX, Color.Green * 0.5f);
             spriteBatch.Draw(TextureManager.hitboxTexture, enemyPathY, Color.Green * 0.5f);
