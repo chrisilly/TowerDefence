@@ -12,15 +12,20 @@ namespace TowerDefence
 {
     enum TowerType { Auto, Manual, Special }
 
-    internal class Tower : Actor
+    public class Tower : Actor
     {
         public static List<Tower> towers = new();
+        List<ITowerBehaviour> behaviors;
 
         float bulletSpeed;
         int bulletDamage;
         float fireRate;
         double fireCooldownTimer;
         bool autoFire;
+
+        public float BulletSpeed { get { return bulletSpeed; } set { bulletSpeed = value; } }
+        public int BulletDamage { get { return bulletDamage; } set { bulletDamage = value; } }
+        public float FireRate { get { return fireRate; } set { fireRate = value; } }
 
         bool preview;
 
@@ -35,23 +40,31 @@ namespace TowerDefence
             this.fireRate = 3f;
             this.fireCooldownTimer = fireRate;
 
+            this.behaviors = new List<ITowerBehaviour>();
+
             this.preview = true;
             this.color = Color.DarkGray * 0.5f;
         }
         
-        public Tower(float bulletSpeed, int bulletDamage, float fireRate, bool autoFire)
+        public Tower(List<ITowerBehaviour> behaviors)
         {
             this.texture = TextureManager.towerTexture;
             this.position = Player.GetMousePosition();
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
+            this.behaviors = new List<ITowerBehaviour> { new DefaultTower() };
 
-            this.bulletSpeed = bulletSpeed;
-            this.bulletDamage = bulletDamage;
-            this.fireRate = fireRate;
+            foreach (ITowerBehaviour behavior in behaviors)
+                this.behaviors.Add(behavior);
+
+            foreach(ITowerBehaviour behavior in behaviors)
+            {
+                behavior.Initialize(this);
+            }
+
             this.fireCooldownTimer = fireRate;
 
             this.preview = true;
-            this.color = Color.DarkGray * 0.5f;
+            this.color *= 0.5f;
         }
 
         public override void Update(GameTime gameTime)
@@ -118,7 +131,7 @@ namespace TowerDefence
                 if (Player.InputPressed(1))
                 {
                     preview = false;
-                    color = Color.DarkGray;
+                    color = color * (1/0.5f);
                 }
             }
             else
@@ -149,9 +162,64 @@ namespace TowerDefence
             return true;
         }
 
-        public static bool GetPreview(Tower tower)
+        public static bool CreatingTower()
         {
-            return tower.preview;
+            foreach (Tower tower in towers)
+                if (tower.preview)
+                    return true;
+
+            return false;
+        }
+    }
+
+    public interface ITowerBehaviour
+    {
+        void Initialize(Tower tower)
+        {
+
+        }
+
+        void OnHit(Tower tower)
+        {
+
+        }
+    }
+
+    public class DefaultTower : ITowerBehaviour
+    {
+        public void Initialize(Tower tower)
+        {
+            tower.BulletSpeed = 200f;
+            tower.BulletDamage = 1;
+            tower.FireRate = 3f;
+            tower.Color = Color.DarkGray;
+        }
+    }
+
+    public class FastTower : ITowerBehaviour
+    {
+        public void Initialize(Tower tower)
+        {
+            tower.FireRate /= 2;
+            tower.Color = Color.LightBlue;
+        }
+    }
+
+    public class DamagingTower : ITowerBehaviour
+    {
+        public void Initialize(Tower tower)
+        {
+            tower.BulletDamage += 1;
+            tower.Color = Color.Red;
+        }
+    }
+
+    public class FastProjectileTower : ITowerBehaviour
+    {
+        public void Initialize(Tower tower)
+        {
+            tower.BulletSpeed *= 2;
+            tower.Color = Color.Yellow;
         }
     }
 }

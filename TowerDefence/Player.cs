@@ -90,9 +90,8 @@ namespace TowerDefence
             if (!InputPressed(Keys.N))
                 return false;
 
-            foreach (Tower tower in Tower.towers)
-                if (Tower.GetPreview(tower))
-                    return false;
+            if (Tower.CreatingTower())
+                return false;
 
             return true;
         }
@@ -191,6 +190,15 @@ namespace TowerDefence
                 return false;
 
             return true;
+        }
+
+        public static bool ClickedOn(Rectangle hitbox, int mouseButton)
+        {
+            if (IsMouseHovering(hitbox))
+                if (InputPressed(mouseButton))
+                    return true;
+
+            return false;
         }
     }
 }
