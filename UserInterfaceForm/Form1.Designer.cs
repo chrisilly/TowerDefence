@@ -38,11 +38,12 @@
             this.towerSelectionInstructionLabel = new System.Windows.Forms.Label();
             this.modifiersLabel = new System.Windows.Forms.Label();
             this.startGameButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buyTowerButton
             // 
-            this.buyTowerButton.Location = new System.Drawing.Point(387, 125);
+            this.buyTowerButton.Location = new System.Drawing.Point(372, 139);
             this.buyTowerButton.Name = "buyTowerButton";
             this.buyTowerButton.Size = new System.Drawing.Size(75, 43);
             this.buyTowerButton.TabIndex = 0;
@@ -52,7 +53,7 @@
             // 
             // sellTowerButton
             // 
-            this.sellTowerButton.Location = new System.Drawing.Point(681, 125);
+            this.sellTowerButton.Location = new System.Drawing.Point(666, 139);
             this.sellTowerButton.Name = "sellTowerButton";
             this.sellTowerButton.Size = new System.Drawing.Size(75, 43);
             this.sellTowerButton.TabIndex = 1;
@@ -61,7 +62,7 @@
             // 
             // fireRateUpgradeButton
             // 
-            this.fireRateUpgradeButton.Location = new System.Drawing.Point(387, 261);
+            this.fireRateUpgradeButton.Location = new System.Drawing.Point(372, 275);
             this.fireRateUpgradeButton.Name = "fireRateUpgradeButton";
             this.fireRateUpgradeButton.Size = new System.Drawing.Size(131, 43);
             this.fireRateUpgradeButton.TabIndex = 2;
@@ -70,7 +71,7 @@
             // 
             // projectileSpeedUpgradeButton
             // 
-            this.projectileSpeedUpgradeButton.Location = new System.Drawing.Point(387, 340);
+            this.projectileSpeedUpgradeButton.Location = new System.Drawing.Point(372, 354);
             this.projectileSpeedUpgradeButton.Name = "projectileSpeedUpgradeButton";
             this.projectileSpeedUpgradeButton.Size = new System.Drawing.Size(369, 43);
             this.projectileSpeedUpgradeButton.TabIndex = 3;
@@ -79,7 +80,7 @@
             // 
             // damageUpgradeButton
             // 
-            this.damageUpgradeButton.Location = new System.Drawing.Point(625, 261);
+            this.damageUpgradeButton.Location = new System.Drawing.Point(610, 275);
             this.damageUpgradeButton.Name = "damageUpgradeButton";
             this.damageUpgradeButton.Size = new System.Drawing.Size(131, 43);
             this.damageUpgradeButton.TabIndex = 4;
@@ -89,9 +90,10 @@
             // wealthLabel
             // 
             this.wealthLabel.AutoSize = true;
-            this.wealthLabel.Location = new System.Drawing.Point(97, 203);
+            this.wealthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wealthLabel.Location = new System.Drawing.Point(31, 113);
             this.wealthLabel.Name = "wealthLabel";
-            this.wealthLabel.Size = new System.Drawing.Size(83, 32);
+            this.wealthLabel.Size = new System.Drawing.Size(174, 69);
             this.wealthLabel.TabIndex = 5;
             this.wealthLabel.Text = "Gold:";
             this.wealthLabel.Click += new System.EventHandler(this.label1_Click);
@@ -99,26 +101,27 @@
             // wealthAmountLabel
             // 
             this.wealthAmountLabel.AutoSize = true;
-            this.wealthAmountLabel.Location = new System.Drawing.Point(187, 202);
+            this.wealthAmountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wealthAmountLabel.Location = new System.Drawing.Point(211, 113);
             this.wealthAmountLabel.Name = "wealthAmountLabel";
-            this.wealthAmountLabel.Size = new System.Drawing.Size(60, 32);
+            this.wealthAmountLabel.Size = new System.Drawing.Size(124, 69);
             this.wealthAmountLabel.TabIndex = 6;
             this.wealthAmountLabel.Text = "null";
             // 
             // towerSelectionInstructionLabel
             // 
             this.towerSelectionInstructionLabel.AutoSize = true;
-            this.towerSelectionInstructionLabel.Location = new System.Drawing.Point(381, 63);
+            this.towerSelectionInstructionLabel.Location = new System.Drawing.Point(366, 85);
             this.towerSelectionInstructionLabel.Name = "towerSelectionInstructionLabel";
-            this.towerSelectionInstructionLabel.Size = new System.Drawing.Size(375, 32);
+            this.towerSelectionInstructionLabel.Size = new System.Drawing.Size(393, 32);
             this.towerSelectionInstructionLabel.TabIndex = 7;
-            this.towerSelectionInstructionLabel.Text = "Select tower to sell or modify";
+            this.towerSelectionInstructionLabel.Text = "(Select tower to sell or modify)";
             this.towerSelectionInstructionLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // modifiersLabel
             // 
             this.modifiersLabel.AutoSize = true;
-            this.modifiersLabel.Location = new System.Drawing.Point(450, 203);
+            this.modifiersLabel.Location = new System.Drawing.Point(435, 217);
             this.modifiersLabel.Name = "modifiersLabel";
             this.modifiersLabel.Size = new System.Drawing.Size(245, 32);
             this.modifiersLabel.TabIndex = 8;
@@ -126,18 +129,28 @@
             // 
             // startGameButton
             // 
-            this.startGameButton.Location = new System.Drawing.Point(83, 53);
+            this.startGameButton.Location = new System.Drawing.Point(84, 42);
             this.startGameButton.Name = "startGameButton";
             this.startGameButton.Size = new System.Drawing.Size(188, 50);
             this.startGameButton.TabIndex = 9;
             this.startGameButton.Text = "Start Game";
             this.startGameButton.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(518, 42);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(92, 32);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Tower";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.startGameButton);
             this.Controls.Add(this.modifiersLabel);
             this.Controls.Add(this.towerSelectionInstructionLabel);
@@ -167,6 +180,7 @@
         private System.Windows.Forms.Label towerSelectionInstructionLabel;
         private System.Windows.Forms.Label modifiersLabel;
         private System.Windows.Forms.Button startGameButton;
+        private System.Windows.Forms.Label label1;
     }
 }
 

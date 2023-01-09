@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UserInterfaceForm;
 
 namespace TowerDefence
 {
@@ -13,6 +14,8 @@ namespace TowerDefence
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
+        Form1 userInterfaceForm;
+
         public static Point windowSize { get; private set; }
         public static Random random = new();
 
@@ -52,6 +55,9 @@ namespace TowerDefence
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureManager.LoadContent(Content);
+
+            userInterfaceForm = new Form1();
+            userInterfaceForm.Show();
 
             StartGame();
         }
