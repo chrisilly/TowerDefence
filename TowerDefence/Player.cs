@@ -15,6 +15,9 @@ namespace TowerDefence
         int wealth;
         int specialEnemyChance = 16;
 
+        public int Health { get { return health; } set { health = value; } }
+        public int Wealth { get { return wealth; } set { wealth = value; } }
+
         static MouseState mouseState, previousMouseState;
         static KeyboardState keyboardState, previousKeyboardState;
 
@@ -87,11 +90,16 @@ namespace TowerDefence
 
         public bool CanCreate()
         {
-            if (!InputPressed(Keys.N))
-                return false;
+            //if (!InputPressed(Keys.N))
+            //    return false;
 
             if (Tower.CreatingTower())
                 return false;
+
+            if (!Game1.userInterfaceForm.buyTowerPressed)
+                return false;
+
+            Game1.userInterfaceForm.buyTowerPressed = false;
 
             return true;
         }
@@ -139,6 +147,15 @@ namespace TowerDefence
             Enemy.enemies.Add(enemy);
         }
 
+        public void Reset()
+        {
+            health = 2;
+            wealth = 0;
+            color = Color.Red;
+            specialEnemyChance = 16;
+            spawnCooldown = 4f;
+        }
+
         public void GetInputState()
         {
             previousMouseState = mouseState;
@@ -179,6 +196,16 @@ namespace TowerDefence
         public static Vector2 GetMousePosition()
         {
             return new Vector2(mouseState.Position.X, mouseState.Position.Y);
+        }
+
+        public static bool MouseWithinBounds()
+        {
+            if (GetMousePosition().X < 0 || GetMousePosition().X > Game1.windowSize.X)
+                return false;
+            else if (GetMousePosition().Y < 0 || GetMousePosition().Y > Game1.windowSize.Y)
+                return false;
+
+            return true;
         }
 
         public static bool IsMouseHovering(Rectangle hitbox)

@@ -8,28 +8,53 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace UserInterfaceForm
 {
     public partial class Form1 : Form
     {
+        public bool startButtonPressed { get; set; }
+        public bool buyTowerPressed { get; set; }
+        public bool sellTowerPressed { get; set; }
+        public bool fireRateUpgradePressed { get; set; }
+        public bool damageUpgradePressed { get; set; }
+        public bool projectileSpeedUpgradePressed { get; set; }
+
+        public Action OnClick;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void startGameButton_Click(object sender, EventArgs e)
         {
-
+            startButtonPressed = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buyTowerButton_Click(object sender, EventArgs e)
         {
-
+            buyTowerPressed = true;
         }
 
-        private void label1_Click_1(object sender, EventArgs e)
+        private void sellTowerButton_Click(object sender, EventArgs e)
         {
+            sellTowerPressed = true;
+        }
 
+        private void fireRateUpgradeButton_Click(object sender, EventArgs e)
+        {
+            fireRateUpgradePressed = true;
+        }
+
+        private void damageUpgradeButton_Click(object sender, EventArgs e)
+        {
+            damageUpgradePressed = true;
+        }
+
+        private void projectileSpeedUpgradeButton_Click(object sender, EventArgs e)
+        {
+            projectileSpeedUpgradePressed = true;
         }
     }
 }

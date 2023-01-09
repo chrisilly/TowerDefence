@@ -21,7 +21,7 @@ namespace TowerDefence
         int bulletDamage;
         float fireRate;
         double fireCooldownTimer;
-        bool autoFire;
+        bool selected;
 
         public float BulletSpeed { get { return bulletSpeed; } set { bulletSpeed = value; } }
         public int BulletDamage { get { return bulletDamage; } set { bulletDamage = value; } }
@@ -74,7 +74,11 @@ namespace TowerDefence
             if (preview)
                 HandlePreview();
             else
+            {
                 AutoFire(gameTime);
+                HandleSelection();
+                HandlePurchasing();
+            }
         }
 
         public void Shoot()
@@ -169,6 +173,63 @@ namespace TowerDefence
                     return true;
 
             return false;
+        }
+
+        public void HandlePurchasing()
+        {
+            PerformOnPress(SellTower, Game1.userInterfaceForm.sellTowerPressed);
+            AddBehaviorOnPress(new FastTower(), Game1.userInterfaceForm.fireRateUpgradePressed);
+            AddBehaviorOnPress(new DamagingTower(), Game1.userInterfaceForm.damageUpgradePressed);
+            AddBehaviorOnPress(new FastProjectileTower(), Game1.userInterfaceForm.projectileSpeedUpgradePressed);
+        }
+
+        public void PerformOnPress(Action OnButtonPress, bool buttonPressBoolean)
+        {
+            if (selected == true && buttonPressBoolean)
+            {
+                OnButtonPress();
+                buttonPressBoolean = false;
+            }
+            else
+                buttonPressBoolean = false;
+        }
+        
+        public void AddBehaviorOnPress(ITowerBehaviour behavior, bool buttonPressBoolean)
+        {
+            if (selected == true && buttonPressBoolean)
+            {
+                behaviors.Add(behavior);
+                buttonPressBoolean = false;
+            }
+            else
+                buttonPressBoolean = false; // this isn't updating...
+        }
+
+        public void SellTower()
+        {
+            towers.Remove(this);
+        }
+
+        public void HandleSelection()
+        {
+            if (!Player.ClickedOn(this.hitbox, 1) && Player.InputPressed(1) && Player.MouseWithinBounds())
+            {
+                color = Color.DarkGray;
+                selected = false;
+            }
+            else if (Player.ClickedOn(this.hitbox, 1))
+            {
+                color = Color.LightGreen;
+                selected = true;
+            }
+            else if (Player.IsMouseHovering(this.hitbox) && selected == false)
+            {
+                color = Color.Yellow;
+            }
+            else if(selected == false)
+            {
+                color = Color.DarkGray;
+            }
         }
     }
 

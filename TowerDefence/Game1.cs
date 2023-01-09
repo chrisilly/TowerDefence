@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using UserInterfaceForm;
 
@@ -14,7 +15,8 @@ namespace TowerDefence
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        Form1 userInterfaceForm;
+
+        public static Form1 userInterfaceForm;
 
         public static Point windowSize { get; private set; }
         public static Random random = new();
@@ -45,7 +47,7 @@ namespace TowerDefence
             enemyPathX = new Rectangle(0, (windowSize.Y - 100) / 2, windowSize.X, 100);
             enemyPathY = new Rectangle((windowSize.X - 100) / 2, 0, 100, windowSize.Y);
 
-            gameState = GameStates.Play;
+            gameState = GameStates.Menu;
 
             base.Initialize();
         }
@@ -55,17 +57,24 @@ namespace TowerDefence
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureManager.LoadContent(Content);
-
+            
             userInterfaceForm = new Form1();
             userInterfaceForm.Show();
 
-            StartGame();
+            player = new Player();
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (userInterfaceForm.startButtonPressed)
+            {
+                StartGame();
+                Debug.WriteLine("Start Button Pressed");
+                userInterfaceForm.startButtonPressed = false;
+            }
 
             switch (gameState)
             {
@@ -128,7 +137,11 @@ namespace TowerDefence
 
         public void StartGame()
         {
-            player = new Player();
+            player.Reset();
+            Enemy.enemies.Clear();
+            Bullet.bullets.Clear();
+            Tower.towers.Clear();
+            gameState = GameStates.Play;
         }
     }
 }

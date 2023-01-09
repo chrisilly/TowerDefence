@@ -49,7 +49,7 @@
             this.buyTowerButton.TabIndex = 0;
             this.buyTowerButton.Text = "Buy";
             this.buyTowerButton.UseVisualStyleBackColor = true;
-            this.buyTowerButton.Click += new System.EventHandler(this.button1_Click);
+            this.buyTowerButton.Click += new System.EventHandler(this.buyTowerButton_Click);
             // 
             // sellTowerButton
             // 
@@ -59,6 +59,7 @@
             this.sellTowerButton.TabIndex = 1;
             this.sellTowerButton.Text = "Sell";
             this.sellTowerButton.UseVisualStyleBackColor = true;
+            this.sellTowerButton.Click += new System.EventHandler(this.sellTowerButton_Click);
             // 
             // fireRateUpgradeButton
             // 
@@ -68,6 +69,7 @@
             this.fireRateUpgradeButton.TabIndex = 2;
             this.fireRateUpgradeButton.Text = "Fire rate";
             this.fireRateUpgradeButton.UseVisualStyleBackColor = true;
+            this.fireRateUpgradeButton.Click += new System.EventHandler(this.fireRateUpgradeButton_Click);
             // 
             // projectileSpeedUpgradeButton
             // 
@@ -77,6 +79,7 @@
             this.projectileSpeedUpgradeButton.TabIndex = 3;
             this.projectileSpeedUpgradeButton.Text = "Projectile Speed";
             this.projectileSpeedUpgradeButton.UseVisualStyleBackColor = true;
+            this.projectileSpeedUpgradeButton.Click += new System.EventHandler(this.projectileSpeedUpgradeButton_Click);
             // 
             // damageUpgradeButton
             // 
@@ -86,6 +89,7 @@
             this.damageUpgradeButton.TabIndex = 4;
             this.damageUpgradeButton.Text = "Damage";
             this.damageUpgradeButton.UseVisualStyleBackColor = true;
+            this.damageUpgradeButton.Click += new System.EventHandler(this.damageUpgradeButton_Click);
             // 
             // wealthLabel
             // 
@@ -96,7 +100,6 @@
             this.wealthLabel.Size = new System.Drawing.Size(174, 69);
             this.wealthLabel.TabIndex = 5;
             this.wealthLabel.Text = "Gold:";
-            this.wealthLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // wealthAmountLabel
             // 
@@ -116,7 +119,6 @@
             this.towerSelectionInstructionLabel.Size = new System.Drawing.Size(393, 32);
             this.towerSelectionInstructionLabel.TabIndex = 7;
             this.towerSelectionInstructionLabel.Text = "(Select tower to sell or modify)";
-            this.towerSelectionInstructionLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // modifiersLabel
             // 
@@ -135,6 +137,7 @@
             this.startGameButton.TabIndex = 9;
             this.startGameButton.Text = "Start Game";
             this.startGameButton.UseVisualStyleBackColor = true;
+            this.startGameButton.Click += new System.EventHandler(this.startGameButton_Click);
             // 
             // label1
             // 
