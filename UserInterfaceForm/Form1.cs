@@ -13,12 +13,12 @@ namespace UserInterfaceForm
 {
     public partial class Form1 : Form
     {
-        public bool startButtonPressed { get; set; }
-        public bool buyTowerPressed { get; set; }
-        public bool sellTowerPressed { get; set; }
-        public bool fireRateUpgradePressed { get; set; }
-        public bool damageUpgradePressed { get; set; }
-        public bool projectileSpeedUpgradePressed { get; set; }
+        public bool startButtonPressed;
+        public bool buyTowerPressed;
+        public bool sellTowerPressed;
+        public bool fireRateUpgradePressed;
+        public bool damageUpgradePressed;
+        public bool projectileSpeedUpgradePressed;
 
         public Action OnClick;
 

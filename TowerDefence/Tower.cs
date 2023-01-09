@@ -177,10 +177,22 @@ namespace TowerDefence
 
         public void HandlePurchasing()
         {
-            PerformOnPress(SellTower, Game1.userInterfaceForm.sellTowerPressed);
-            AddBehaviorOnPress(new FastTower(), Game1.userInterfaceForm.fireRateUpgradePressed);
-            AddBehaviorOnPress(new DamagingTower(), Game1.userInterfaceForm.damageUpgradePressed);
-            AddBehaviorOnPress(new FastProjectileTower(), Game1.userInterfaceForm.projectileSpeedUpgradePressed);
+            SellTower();
+            //PerformOnPress(SellTower, Game1.userInterfaceForm.sellTowerPressed);
+            //AddBehaviorOnPress(new FastTower(), Game1.userInterfaceForm.fireRateUpgradePressed);
+            //AddBehaviorOnPress(new DamagingTower(), Game1.userInterfaceForm.damageUpgradePressed);
+            //AddBehaviorOnPress(new FastProjectileTower(), Game1.userInterfaceForm.projectileSpeedUpgradePressed);
+        }
+
+        public void SellTower()
+        {
+            bool sellTowerPressed = Game1.userInterfaceForm.sellTowerPressed;
+            Game1.userInterfaceForm.sellTowerPressed = false;
+
+            if (sellTowerPressed)
+            {
+                towers.RemoveAll(tower => tower.selected);
+            }
         }
 
         public void PerformOnPress(Action OnButtonPress, bool buttonPressBoolean)
@@ -188,10 +200,9 @@ namespace TowerDefence
             if (selected == true && buttonPressBoolean)
             {
                 OnButtonPress();
-                buttonPressBoolean = false;
             }
-            else
-                buttonPressBoolean = false;
+            
+            buttonPressBoolean = false;
         }
         
         public void AddBehaviorOnPress(ITowerBehaviour behavior, bool buttonPressBoolean)
@@ -199,15 +210,9 @@ namespace TowerDefence
             if (selected == true && buttonPressBoolean)
             {
                 behaviors.Add(behavior);
-                buttonPressBoolean = false;
             }
-            else
-                buttonPressBoolean = false; // this isn't updating...
-        }
 
-        public void SellTower()
-        {
-            towers.Remove(this);
+            buttonPressBoolean = false;
         }
 
         public void HandleSelection()
