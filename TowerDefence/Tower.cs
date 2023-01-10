@@ -178,10 +178,9 @@ namespace TowerDefence
         public void HandlePurchasing()
         {
             SellTower();
-            //PerformOnPress(SellTower, Game1.userInterfaceForm.sellTowerPressed);
-            //AddBehaviorOnPress(new FastTower(), Game1.userInterfaceForm.fireRateUpgradePressed);
-            //AddBehaviorOnPress(new DamagingTower(), Game1.userInterfaceForm.damageUpgradePressed);
-            //AddBehaviorOnPress(new FastProjectileTower(), Game1.userInterfaceForm.projectileSpeedUpgradePressed);
+            IncreaseFireRate();
+            IncreaseDamage();
+            IncreaseProjectileSpeed();
         }
 
         public void SellTower()
@@ -195,24 +194,61 @@ namespace TowerDefence
             }
         }
 
-        public void PerformOnPress(Action OnButtonPress, bool buttonPressBoolean)
+        public void ApplyModifier(ITowerBehaviour behavior, Tower tower)
         {
-            if (selected == true && buttonPressBoolean)
-            {
-                OnButtonPress();
-            }
-            
-            buttonPressBoolean = false;
+            behavior.Initialize(tower);
         }
-        
-        public void AddBehaviorOnPress(ITowerBehaviour behavior, bool buttonPressBoolean)
+
+        public void IncreaseFireRate()
         {
-            if (selected == true && buttonPressBoolean)
+            bool fireRateUpgradePressed = Game1.userInterfaceForm.fireRateUpgradePressed;
+            Game1.userInterfaceForm.fireRateUpgradePressed = false;
+
+            if(fireRateUpgradePressed)
             {
-                behaviors.Add(behavior);
+                foreach (Tower tower in towers)
+                {
+                    if (tower.selected)
+                    {
+                        ApplyModifier(new FastTower(), tower);
+                    }
+                }
+            }
+        }
+
+        public void IncreaseDamage()
+        {
+            bool damageUpgradePressed = Game1.userInterfaceForm.damageUpgradePressed;
+            Game1.userInterfaceForm.damageUpgradePressed = false;
+
+            if (damageUpgradePressed)
+            {
+                foreach (Tower tower in towers)
+                {
+                    if (tower.selected)
+                    {
+                        ApplyModifier(new DamagingTower(), tower);
+                    }
+                }
             }
 
-            buttonPressBoolean = false;
+        }
+
+        public void IncreaseProjectileSpeed()
+        {
+            bool projectileSpeedUpgradePressed = Game1.userInterfaceForm.projectileSpeedUpgradePressed;
+            Game1.userInterfaceForm.projectileSpeedUpgradePressed = false;
+
+            if (projectileSpeedUpgradePressed)
+            {
+                foreach (Tower tower in towers)
+                {
+                    if (tower.selected)
+                    {
+                        ApplyModifier(new FastProjectileTower(), tower);
+                    }
+                }
+            }
         }
 
         public void HandleSelection()
@@ -244,11 +280,6 @@ namespace TowerDefence
         {
 
         }
-
-        void OnHit(Tower tower)
-        {
-
-        }
     }
 
     public class DefaultTower : ITowerBehaviour
@@ -267,7 +298,7 @@ namespace TowerDefence
         public void Initialize(Tower tower)
         {
             tower.FireRate /= 2;
-            tower.Color = Color.LightBlue;
+            //tower.Color = Color.LightBlue;
         }
     }
 
@@ -276,7 +307,7 @@ namespace TowerDefence
         public void Initialize(Tower tower)
         {
             tower.BulletDamage += 1;
-            tower.Color = Color.Red;
+            //tower.Color = Color.Red;
         }
     }
 
@@ -285,7 +316,7 @@ namespace TowerDefence
         public void Initialize(Tower tower)
         {
             tower.BulletSpeed *= 2;
-            tower.Color = Color.Yellow;
+            //tower.Color = Color.Yellow;
         }
     }
 }

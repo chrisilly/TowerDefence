@@ -23,6 +23,10 @@ namespace TowerDefence
             this.hitbox = new Rectangle((int)startPosition.X, (int)startPosition.Y, 6, 6);
             this.damage = damage;
             this.color = Color.Yellow;
+            if(damage > 1)
+            {
+                this.color = Color.Red;
+            }
         }
 
         public override void Update(GameTime gameTime)
