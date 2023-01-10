@@ -32,6 +32,8 @@ namespace TowerDefence
         public static Rectangle EnemyPathX { get { return enemyPathX; } }
         public static Rectangle EnemyPathY { get { return enemyPathY; } }
 
+        public static RenderTarget2D renderTarget;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -49,6 +51,8 @@ namespace TowerDefence
             enemyPathX = new Rectangle(0, (windowSize.Y - 100) / 2, windowSize.X, 100);
             enemyPathY = new Rectangle((windowSize.X - 100) / 2, 0, 100, windowSize.Y);
 
+            renderTarget = new RenderTarget2D(GraphicsDevice, windowSize.X, windowSize.Y);
+
             gameState = GameStates.Menu;
 
             base.Initialize();
@@ -59,6 +63,8 @@ namespace TowerDefence
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureManager.LoadContent(Content);
+
+            //DrawOnRenderTarget();
 
             particleSystem = new Emitter(TextureManager.bulletTexture, Vector2.Zero);
             
@@ -112,11 +118,15 @@ namespace TowerDefence
 
         protected override void Draw(GameTime gameTime)
         {
+            DrawOnRenderTarget();
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
 
             spriteBatch.Draw(TextureManager.backgroundTexture, Vector2.Zero, Color.White);
+
+            spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
 
             player.Draw(spriteBatch);
 
@@ -128,7 +138,8 @@ namespace TowerDefence
                 enemy.Draw(spriteBatch);
 
             foreach (Tower tower in Tower.towers)
-                tower.Draw(spriteBatch);
+                if(tower.preview)
+                    tower.Draw(spriteBatch);
 
             foreach (Bullet bullet in Bullet.bullets)
                 bullet.Draw(spriteBatch);
@@ -136,6 +147,24 @@ namespace TowerDefence
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void DrawOnRenderTarget()
+        {
+            GraphicsDevice.SetRenderTarget(renderTarget);
+            GraphicsDevice.Clear(Color.Transparent);
+
+            spriteBatch.Begin();
+
+            //spriteBatch.Draw(renderTarget, Vector2.Zero, Color.White);
+            foreach (Tower tower in Tower.towers)
+                if(!tower.preview)
+                    tower.Draw(spriteBatch);
+            spriteBatch.Draw(TextureManager.transparentBackground, Vector2.Zero, Color.White);
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
         }
 
         public void DrawPathHitboxes()

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct2D1;
 
 namespace TowerDefence
 {
@@ -27,7 +28,7 @@ namespace TowerDefence
         public int BulletDamage { get { return bulletDamage; } set { bulletDamage = value; } }
         public float FireRate { get { return fireRate; } set { fireRate = value; } }
 
-        bool preview;
+        public bool preview { get; private set; }
 
         public Tower()
         {
@@ -152,14 +153,17 @@ namespace TowerDefence
             if (hitbox.Intersects(Game1.EnemyPathX) || hitbox.Intersects(Game1.EnemyPathY))
                 return false;
 
-            foreach (Tower tower in towers)
-            {
-                if (tower == this)
-                    continue;
+            //foreach (Tower tower in towers)
+            //{
+            //    if (tower == this)
+            //        continue;
 
-                else if (this.hitbox.Intersects(tower.hitbox))
-                    return false;
-            }
+            //    else if (this.hitbox.Intersects(tower.hitbox))
+            //        return false;
+            //}
+
+            if (IsOverlapping())
+                return false;
 
             if (position.X < 0 || position.X > Game1.windowSize.X - texture.Width)
                 return false;
@@ -167,6 +171,31 @@ namespace TowerDefence
                 return false;
 
             return true;
+        }
+
+        public bool IsOverlapping()
+        {
+            if (Player.MouseWithinBounds())
+            {
+                try
+                {
+                    Color[] pixels = new Color[texture.Width * texture.Height];
+                    Color[] pixels2 = new Color[texture.Width * texture.Height];
+                    texture.GetData<Color>(pixels2);
+                    Game1.renderTarget.GetData(0, hitbox, pixels, 0, pixels.Length);
+                    for (int i = 0; i < pixels.Length; ++i)
+                    {
+                        if (pixels[i].A > 0.0f && pixels2[i].A > 0.0f)
+                            return true;
+                    }
+                }
+                catch
+                {
+                    Debug.WriteLine("Cannot check the pixel states of the whole Tower texture! Texture partially out of bounds!");
+                }
+            }
+            
+            return false;
         }
 
         public static bool CreatingTower()

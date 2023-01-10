@@ -218,6 +218,16 @@ namespace TowerDefence
 
             return true;
         }
+        
+        public static bool MouseWithinBoundsAndOffset(int offset)
+        {
+            if (GetMousePosition().X < 0 + offset || GetMousePosition().X > Game1.windowSize.X - offset)
+                return false;
+            else if (GetMousePosition().Y < 0 + offset || GetMousePosition().Y > Game1.windowSize.Y - offset)
+                return false;
+
+            return true;
+        }
 
         public static bool IsMouseHovering(Rectangle hitbox)
         {

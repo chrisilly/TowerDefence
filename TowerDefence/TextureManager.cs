@@ -22,8 +22,12 @@ namespace TowerDefence
         public static Texture2D hitboxTexture;
         public static Texture2D heartTexture;
 
+        public static Texture2D transparentBackground;
+
         public static void LoadContent(ContentManager Content)
         {
+            transparentBackground = Content.Load<Texture2D>("transparentbackground1280x720");
+
             backgroundTexture = Content.Load<Texture2D>("background");
             towerTexture = Content.Load<Texture2D>("towers");
             wowerTexture = Content.Load<Texture2D>("tower");
