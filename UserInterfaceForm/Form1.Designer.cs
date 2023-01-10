@@ -44,55 +44,55 @@
             // buyTowerButton
             // 
             this.buyTowerButton.Location = new System.Drawing.Point(140, 58);
-            this.buyTowerButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.buyTowerButton.Margin = new System.Windows.Forms.Padding(1);
             this.buyTowerButton.Name = "buyTowerButton";
-            this.buyTowerButton.Size = new System.Drawing.Size(28, 18);
+            this.buyTowerButton.Size = new System.Drawing.Size(58, 18);
             this.buyTowerButton.TabIndex = 0;
-            this.buyTowerButton.Text = "Buy";
+            this.buyTowerButton.Text = "Buy (10)";
             this.buyTowerButton.UseVisualStyleBackColor = true;
             this.buyTowerButton.Click += new System.EventHandler(this.buyTowerButton_Click);
             // 
             // sellTowerButton
             // 
-            this.sellTowerButton.Location = new System.Drawing.Point(250, 58);
-            this.sellTowerButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.sellTowerButton.Location = new System.Drawing.Point(223, 58);
+            this.sellTowerButton.Margin = new System.Windows.Forms.Padding(1);
             this.sellTowerButton.Name = "sellTowerButton";
-            this.sellTowerButton.Size = new System.Drawing.Size(28, 18);
+            this.sellTowerButton.Size = new System.Drawing.Size(55, 18);
             this.sellTowerButton.TabIndex = 1;
-            this.sellTowerButton.Text = "Sell";
+            this.sellTowerButton.Text = "Sell (10)";
             this.sellTowerButton.UseVisualStyleBackColor = true;
             this.sellTowerButton.Click += new System.EventHandler(this.sellTowerButton_Click);
             // 
             // fireRateUpgradeButton
             // 
             this.fireRateUpgradeButton.Location = new System.Drawing.Point(140, 115);
-            this.fireRateUpgradeButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.fireRateUpgradeButton.Margin = new System.Windows.Forms.Padding(1);
             this.fireRateUpgradeButton.Name = "fireRateUpgradeButton";
-            this.fireRateUpgradeButton.Size = new System.Drawing.Size(49, 18);
+            this.fireRateUpgradeButton.Size = new System.Drawing.Size(68, 18);
             this.fireRateUpgradeButton.TabIndex = 2;
-            this.fireRateUpgradeButton.Text = "Fire rate";
+            this.fireRateUpgradeButton.Text = "Fire rate (12)";
             this.fireRateUpgradeButton.UseVisualStyleBackColor = true;
             this.fireRateUpgradeButton.Click += new System.EventHandler(this.fireRateUpgradeButton_Click);
             // 
             // projectileSpeedUpgradeButton
             // 
             this.projectileSpeedUpgradeButton.Location = new System.Drawing.Point(140, 148);
-            this.projectileSpeedUpgradeButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.projectileSpeedUpgradeButton.Margin = new System.Windows.Forms.Padding(1);
             this.projectileSpeedUpgradeButton.Name = "projectileSpeedUpgradeButton";
             this.projectileSpeedUpgradeButton.Size = new System.Drawing.Size(138, 18);
             this.projectileSpeedUpgradeButton.TabIndex = 3;
-            this.projectileSpeedUpgradeButton.Text = "Projectile Speed";
+            this.projectileSpeedUpgradeButton.Text = "Projectile Speed (8)";
             this.projectileSpeedUpgradeButton.UseVisualStyleBackColor = true;
             this.projectileSpeedUpgradeButton.Click += new System.EventHandler(this.projectileSpeedUpgradeButton_Click);
             // 
             // damageUpgradeButton
             // 
-            this.damageUpgradeButton.Location = new System.Drawing.Point(229, 115);
-            this.damageUpgradeButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.damageUpgradeButton.Location = new System.Drawing.Point(210, 115);
+            this.damageUpgradeButton.Margin = new System.Windows.Forms.Padding(1);
             this.damageUpgradeButton.Name = "damageUpgradeButton";
-            this.damageUpgradeButton.Size = new System.Drawing.Size(49, 18);
+            this.damageUpgradeButton.Size = new System.Drawing.Size(68, 18);
             this.damageUpgradeButton.TabIndex = 4;
-            this.damageUpgradeButton.Text = "Damage";
+            this.damageUpgradeButton.Text = "Damage (20)";
             this.damageUpgradeButton.UseVisualStyleBackColor = true;
             this.damageUpgradeButton.Click += new System.EventHandler(this.damageUpgradeButton_Click);
             // 
@@ -117,6 +117,7 @@
             this.wealthAmountLabel.Size = new System.Drawing.Size(51, 29);
             this.wealthAmountLabel.TabIndex = 6;
             this.wealthAmountLabel.Text = "null";
+            this.wealthAmountLabel.Click += new System.EventHandler(this.wealthAmountLabel_Click);
             // 
             // towerSelectionInstructionLabel
             // 
@@ -141,7 +142,7 @@
             // startGameButton
             // 
             this.startGameButton.Location = new System.Drawing.Point(32, 18);
-            this.startGameButton.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.startGameButton.Margin = new System.Windows.Forms.Padding(1);
             this.startGameButton.Name = "startGameButton";
             this.startGameButton.Size = new System.Drawing.Size(70, 21);
             this.startGameButton.TabIndex = 9;
@@ -175,7 +176,7 @@
             this.Controls.Add(this.fireRateUpgradeButton);
             this.Controls.Add(this.sellTowerButton);
             this.Controls.Add(this.buyTowerButton);
-            this.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -191,11 +192,11 @@
         private System.Windows.Forms.Button projectileSpeedUpgradeButton;
         private System.Windows.Forms.Button damageUpgradeButton;
         private System.Windows.Forms.Label wealthLabel;
-        private System.Windows.Forms.Label wealthAmountLabel;
         private System.Windows.Forms.Label towerSelectionInstructionLabel;
         private System.Windows.Forms.Label modifiersLabel;
         private System.Windows.Forms.Button startGameButton;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label wealthAmountLabel;
     }
 }
 

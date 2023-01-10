@@ -126,7 +126,10 @@ namespace TowerDefence
             this.position = Player.GetMousePosition();
 
             if (Player.InputPressed(2))
+            {
                 towers.Remove(this);
+                Game1.player.Wealth += 10;
+            }
 
             if(CanPlace())
             {
@@ -178,9 +181,17 @@ namespace TowerDefence
         public void HandlePurchasing()
         {
             SellTower();
-            IncreaseFireRate();
-            IncreaseDamage();
-            IncreaseProjectileSpeed();
+
+            if(Game1.player.Wealth >= 12)
+                IncreaseFireRate();
+
+            if(Game1.player.Wealth >= 20)
+                IncreaseDamage();
+
+            if(Game1.player.Wealth >= 8)
+                IncreaseProjectileSpeed();
+
+            ResetButtons();
         }
 
         public void SellTower()
@@ -190,13 +201,30 @@ namespace TowerDefence
 
             if (sellTowerPressed)
             {
-                towers.RemoveAll(tower => tower.selected);
+                foreach (Tower tower in towers.ToList())
+                {
+                    if (tower.selected)
+                    {
+                        towers.Remove(tower);
+                        Game1.player.Wealth += 10;
+                    }
+                }
+
+                //towers.RemoveAll(tower => tower.selected);
             }
         }
 
         public void ApplyModifier(ITowerBehaviour behavior, Tower tower)
         {
             behavior.Initialize(tower);
+        }
+
+        public void ResetButtons()
+        {
+            Game1.userInterfaceForm.sellTowerPressed = false;
+            Game1.userInterfaceForm.fireRateUpgradePressed = false;
+            Game1.userInterfaceForm.damageUpgradePressed = false;
+            Game1.userInterfaceForm.projectileSpeedUpgradePressed = false;
         }
 
         public void IncreaseFireRate()
@@ -211,6 +239,7 @@ namespace TowerDefence
                     if (tower.selected)
                     {
                         ApplyModifier(new FastTower(), tower);
+                        Game1.player.Wealth -= 12;
                     }
                 }
             }
@@ -228,6 +257,7 @@ namespace TowerDefence
                     if (tower.selected)
                     {
                         ApplyModifier(new DamagingTower(), tower);
+                        Game1.player.Wealth -= 20;
                     }
                 }
             }
@@ -246,6 +276,7 @@ namespace TowerDefence
                     if (tower.selected)
                     {
                         ApplyModifier(new FastProjectileTower(), tower);
+                        Game1.player.Wealth -= 8;
                     }
                 }
             }

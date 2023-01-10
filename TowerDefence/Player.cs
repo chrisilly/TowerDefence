@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TowerDefence
 {
-    internal class Player : Actor
+    public class Player : Actor
     {
         int health;
         int wealth;
@@ -39,6 +39,8 @@ namespace TowerDefence
         public override void Update(GameTime gameTime)
         {
             GetInputState();
+
+            UpdateDisplayedGold();
 
             switch (Game1.gameState)
             {
@@ -99,6 +101,9 @@ namespace TowerDefence
             if (!Game1.userInterfaceForm.buyTowerPressed)
                 return false;
 
+            if (wealth < 10)
+                return false;
+
             Game1.userInterfaceForm.buyTowerPressed = false;
 
             return true;
@@ -109,6 +114,7 @@ namespace TowerDefence
             Tower tower = new Tower();
             Tower.towers.Add(tower);
             Debug.WriteLine("Tower Created.");
+            wealth -= 10;
         }
 
         public void SpawnEnemies(GameTime gameTime)
@@ -147,10 +153,15 @@ namespace TowerDefence
             Enemy.enemies.Add(enemy);
         }
 
+        public void UpdateDisplayedGold()
+        {
+            Game1.userInterfaceForm.wealthAmountLabel.Text = wealth.ToString();
+        }
+
         public void Reset()
         {
             health = 2;
-            wealth = 0;
+            wealth = 10;
             color = Color.Red;
             specialEnemyChance = 16;
             spawnCooldown = 4f;

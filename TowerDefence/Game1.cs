@@ -21,7 +21,7 @@ namespace TowerDefence
         public static Point windowSize { get; private set; }
         public static Random random = new();
 
-        Player player;
+        public static Player player;
 
         public static GameStates gameState;
 

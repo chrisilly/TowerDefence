@@ -20,7 +20,7 @@ namespace UserInterfaceForm
         public bool damageUpgradePressed;
         public bool projectileSpeedUpgradePressed;
 
-        public Action OnClick;
+        public string goldAmountLabel;
 
         public Form1()
         {
@@ -55,6 +55,11 @@ namespace UserInterfaceForm
         private void projectileSpeedUpgradeButton_Click(object sender, EventArgs e)
         {
             projectileSpeedUpgradePressed = true;
+        }
+
+        private void wealthAmountLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

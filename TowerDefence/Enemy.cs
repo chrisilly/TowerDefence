@@ -91,6 +91,12 @@ namespace TowerDefence
             }
 
             // Remove all enemies that return a health value less than or equal to 0
+            foreach (Enemy enemy in enemies)
+            {
+                if (enemy.health <= 0)
+                    Game1.player.Wealth += 3;
+            }
+
             enemies.RemoveAll(enemy => enemy.health <= 0);
         }
 
