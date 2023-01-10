@@ -21,6 +21,8 @@ namespace TowerDefence
         public static Point windowSize { get; private set; }
         public static Random random = new();
 
+        Emitter particleSystem;
+
         public static Player player;
 
         public static GameStates gameState;
@@ -57,6 +59,8 @@ namespace TowerDefence
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             TextureManager.LoadContent(Content);
+
+            particleSystem = new Emitter(TextureManager.bulletTexture, Vector2.Zero);
             
             userInterfaceForm = new Form1();
             userInterfaceForm.Show();
@@ -75,6 +79,9 @@ namespace TowerDefence
                 Debug.WriteLine("Start Button Pressed");
                 userInterfaceForm.startButtonPressed = false;
             }
+
+            particleSystem.Position = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            particleSystem.Update();
 
             switch (gameState)
             {
@@ -112,6 +119,8 @@ namespace TowerDefence
             spriteBatch.Draw(TextureManager.backgroundTexture, Vector2.Zero, Color.White);
 
             player.Draw(spriteBatch);
+
+            particleSystem.Draw(spriteBatch);
 
             //DrawPathHitboxes();
 
