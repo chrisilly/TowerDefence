@@ -24,6 +24,10 @@ namespace TowerDefence
         double spawnCooldownTimer;
         float spawnCooldown;
 
+        double waveTimer;
+        int waveTime;
+        int wave;
+
         public Player()
         {
             this.texture = TextureManager.heartTexture;
@@ -31,23 +35,41 @@ namespace TowerDefence
             this.health = 2;
             this.position = new Vector2((Game1.windowSize.X - texture.Width) / 2, (Game1.windowSize.Y - texture.Height) / 2);
             this.hitbox = new Rectangle((int)position.X, (int)position.Y, 54, 48);
+
+            this.wave = 0;
+            this.waveTime = 10;
+            this.waveTimer = waveTime;
             
-            this.spawnCooldown = 4f;
-            this.spawnCooldownTimer = spawnCooldown;
+            this.spawnCooldown = 6000;
+            this.spawnCooldownTimer = 0;
         }
 
         public override void Update(GameTime gameTime)
         {
             GetInputState();
 
-            UpdateDisplayedGold();
-
             switch (Game1.gameState)
             {
                 case GameStates.Menu:
                     break;
                 case GameStates.Play:
-                    SpawnEnemies(gameTime);
+                    UpdateFormValues();
+
+                    //win condition
+                    if (wave >= 10 && Enemy.enemies.Count == 0)
+                    {
+                        Enemy.enemies.Clear();
+                        Bullet.bullets.Clear();
+                        color = Color.Yellow;
+                        Game1.userInterfaceForm.waveCount.Text = "YOU WIN!";
+
+                        Game1.gameState = GameStates.End;
+                    }
+
+                    WaveHandler();
+
+                    if(wave != 10)
+                        SpawnEnemies(gameTime);
 
                     if (CanCreate())
                         CreateTower();
@@ -58,7 +80,14 @@ namespace TowerDefence
                         if (health == 1)
                             StartSecondWave();
                         if (health <= 0)
+                        {
+                            Bullet.bullets.Clear();
+                            Tower.towers.Clear();
+                            color = Color.Black;
+                            Game1.userInterfaceForm.waveCount.Text = "YOU LOSE!";
+
                             Game1.gameState = GameStates.End;
+                        }
                     }
                     break;
                 case GameStates.End:
@@ -87,7 +116,19 @@ namespace TowerDefence
             Bullet.bullets.Clear();
             color = Color.Blue;
             specialEnemyChance -= 4;
-            spawnCooldown = 2.75f;
+            spawnCooldown -= 2;
+        }
+
+        public void WaveHandler()
+        {
+            if (wave == 2)
+                spawnCooldown = 4000;
+            if (wave == 4)
+                spawnCooldown = 2000;
+            if (wave == 6)
+                spawnCooldown = 500;
+            if (wave == 8)
+                spawnCooldown = 250;
         }
 
         public bool CanCreate()
@@ -119,52 +160,64 @@ namespace TowerDefence
 
         public void SpawnEnemies(GameTime gameTime)
         {
-            spawnCooldownTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+            spawnCooldownTimer -= gameTime.ElapsedGameTime.TotalMilliseconds;
+            waveTimer -= gameTime.ElapsedGameTime.TotalSeconds;
 
             if(spawnCooldownTimer <= 0)
             {
                 spawnCooldownTimer = spawnCooldown;
                 CreateEnemy();
             }
+
+            if(waveTimer <= 0)
+            {
+                waveTimer = waveTime;
+                wave++;
+                specialEnemyChance -= 1;
+            }
         }
 
         public void CreateEnemy()
         {
-            IEnemyBehaviorType enemyType;
-            int chance = Game1.random.Next(specialEnemyChance);
-
-            switch (chance)
-            {
-                case 0:
-                    enemyType = new FastEnemy();
-                    break;
-                case 1:
-                    enemyType = new SlowEnemy();
-                    break;
-                case 2:
-                    enemyType = new AngryEnemy();
-                    break;
-                default:
-                    enemyType = new BasicEnemy();
-                    break;
-            }
-
-            Enemy enemy = new Enemy(enemyType);
+            Enemy enemy = new Enemy(GetRandomEnemyType());
             Enemy.enemies.Add(enemy);
         }
 
-        public void UpdateDisplayedGold()
+        public IEnemyBehaviorType GetRandomEnemyType()
+        {
+            if(wave > 0)
+            {
+                int chance = Game1.random.Next(specialEnemyChance);
+
+                switch (chance)
+                {
+                    case 0:
+                        return new FastEnemy();
+                    case 1:
+                        return new SlowEnemy();
+                    case 2:
+                        return new AngryEnemy();
+                    default:
+                        return new BasicEnemy();
+                }
+            }
+
+            return new BasicEnemy();
+        }
+
+        public void UpdateFormValues()
         {
             Game1.userInterfaceForm.wealthAmountLabel.Text = wealth.ToString();
+            Game1.userInterfaceForm.waveCount.Text = wave.ToString();
         }
 
         public void Reset()
         {
-            health = 2;
+            health = 1;
             wealth = 10;
             color = Color.Red;
             specialEnemyChance = 16;
-            spawnCooldown = 4f;
+            spawnCooldown = 6000;
         }
 
         public void GetInputState()

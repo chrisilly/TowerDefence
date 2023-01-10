@@ -175,7 +175,7 @@ namespace TowerDefence
 
         public void OnDamage(Enemy enemy)
         {
-            if (enemy.Health == 2)
+            if (enemy.Health < 3)
                 enemy.Color = Color.YellowGreen;
         }
     }

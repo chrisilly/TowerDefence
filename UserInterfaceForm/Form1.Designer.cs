@@ -39,6 +39,9 @@
             this.modifiersLabel = new System.Windows.Forms.Label();
             this.startGameButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.waveCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buyTowerButton
@@ -100,7 +103,7 @@
             // 
             this.wealthLabel.AutoSize = true;
             this.wealthLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wealthLabel.Location = new System.Drawing.Point(12, 47);
+            this.wealthLabel.Location = new System.Drawing.Point(11, 75);
             this.wealthLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.wealthLabel.Name = "wealthLabel";
             this.wealthLabel.Size = new System.Drawing.Size(71, 29);
@@ -111,7 +114,7 @@
             // 
             this.wealthAmountLabel.AutoSize = true;
             this.wealthAmountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.wealthAmountLabel.Location = new System.Drawing.Point(79, 47);
+            this.wealthAmountLabel.Location = new System.Drawing.Point(78, 75);
             this.wealthAmountLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.wealthAmountLabel.Name = "wealthAmountLabel";
             this.wealthAmountLabel.Size = new System.Drawing.Size(51, 29);
@@ -160,11 +163,43 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Tower";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Overcome wave 10 to win!";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(11, 115);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(49, 20);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Wave";
+            // 
+            // waveCount
+            // 
+            this.waveCount.AutoSize = true;
+            this.waveCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.waveCount.Location = new System.Drawing.Point(11, 146);
+            this.waveCount.Name = "waveCount";
+            this.waveCount.Size = new System.Drawing.Size(33, 20);
+            this.waveCount.TabIndex = 13;
+            this.waveCount.Text = "null";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(330, 205);
+            this.Controls.Add(this.waveCount);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.startGameButton);
             this.Controls.Add(this.modifiersLabel);
@@ -197,6 +232,9 @@
         private System.Windows.Forms.Button startGameButton;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label wealthAmountLabel;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label waveCount;
     }
 }
 
