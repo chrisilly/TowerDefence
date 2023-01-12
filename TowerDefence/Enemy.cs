@@ -51,7 +51,7 @@ namespace TowerDefence
             this.position = DetermineEnemyStartPosition();
             this.behavior = behavior;
 
-            this.speed = 25f;
+            this.speed = 35f;
 
             behavior.Initialize(this);
 

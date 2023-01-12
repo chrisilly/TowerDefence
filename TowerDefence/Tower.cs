@@ -217,7 +217,7 @@ namespace TowerDefence
             if(Game1.player.Wealth >= 40)
                 IncreaseDamage();
 
-            if(Game1.player.Wealth >= 8)
+            if(Game1.player.Wealth >= 4)
                 IncreaseProjectileSpeed();
 
             ResetButtons();
@@ -305,7 +305,7 @@ namespace TowerDefence
                     if (tower.selected)
                     {
                         ApplyModifier(new FastProjectileTower(), tower);
-                        Game1.player.Wealth -= 8;
+                        Game1.player.Wealth -= 4;
                     }
                 }
             }

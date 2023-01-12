@@ -84,7 +84,7 @@
             this.projectileSpeedUpgradeButton.Name = "projectileSpeedUpgradeButton";
             this.projectileSpeedUpgradeButton.Size = new System.Drawing.Size(138, 18);
             this.projectileSpeedUpgradeButton.TabIndex = 3;
-            this.projectileSpeedUpgradeButton.Text = "Projectile Speed (8)";
+            this.projectileSpeedUpgradeButton.Text = "Projectile Speed (4)";
             this.projectileSpeedUpgradeButton.UseVisualStyleBackColor = true;
             this.projectileSpeedUpgradeButton.Click += new System.EventHandler(this.projectileSpeedUpgradeButton_Click);
             // 
