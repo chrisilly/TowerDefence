@@ -218,6 +218,7 @@ namespace TowerDefence
             color = Color.Red;
             specialEnemyChance = 16;
             spawnCooldown = 6000;
+            wave = 0;
         }
 
         public void GetInputState()

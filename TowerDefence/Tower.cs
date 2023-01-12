@@ -214,7 +214,7 @@ namespace TowerDefence
             if(Game1.player.Wealth >= 12)
                 IncreaseFireRate();
 
-            if(Game1.player.Wealth >= 20)
+            if(Game1.player.Wealth >= 40)
                 IncreaseDamage();
 
             if(Game1.player.Wealth >= 8)
@@ -286,7 +286,7 @@ namespace TowerDefence
                     if (tower.selected)
                     {
                         ApplyModifier(new DamagingTower(), tower);
-                        Game1.player.Wealth -= 20;
+                        Game1.player.Wealth -= 40;
                     }
                 }
             }

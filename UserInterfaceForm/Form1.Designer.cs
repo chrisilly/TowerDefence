@@ -95,7 +95,7 @@
             this.damageUpgradeButton.Name = "damageUpgradeButton";
             this.damageUpgradeButton.Size = new System.Drawing.Size(68, 18);
             this.damageUpgradeButton.TabIndex = 4;
-            this.damageUpgradeButton.Text = "Damage (20)";
+            this.damageUpgradeButton.Text = "Damage (40)";
             this.damageUpgradeButton.UseVisualStyleBackColor = true;
             this.damageUpgradeButton.Click += new System.EventHandler(this.damageUpgradeButton_Click);
             // 
